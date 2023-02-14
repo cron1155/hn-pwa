@@ -6,14 +6,14 @@ function Dashboard() {
   const { isLoading, error, data } = useQuery(
     "storyData",
     () =>
-      fetch("https://hn.algolia.com/api/v1/search_by_date?tags=story").then(
-        (res) => res.json()
-      ),
+      fetch(
+        "https://hn.algolia.com/api/v1/search_by_date?tags=front_page"
+      ).then((res) => res.json()),
     { cacheTime: 5000 }
   );
 
   const newsList = useMemo(() => {
-    if (!data) return <></>;
+    if (!data || !data.hits) return <></>;
 
     return data.hits.map((hitObject: any, index: number) => (
       <NewsEntry
