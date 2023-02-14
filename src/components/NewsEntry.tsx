@@ -5,18 +5,22 @@ export interface NewsEntryProp {
   entryIndex?: number;
   entryTitle?: string;
   entryAuthor?: string;
+  entryNumComments?: number;
+  entryNumPoints?: number;
 }
 
 const NewsEntry: React.FC<NewsEntryProp> = ({
   entryIndex,
   entryTitle,
   entryAuthor,
+  entryNumComments,
+  entryNumPoints,
 }) => {
   return (
     <EntryContainer>
       <EntryHeader>
-        {entryIndex ? (
-          <EntryIndex>{entryIndex}</EntryIndex>
+        {entryIndex !== undefined ? (
+          <EntryIndex>{entryIndex}.</EntryIndex>
         ) : (
           <EntryIndex>-</EntryIndex>
         )}
@@ -34,8 +38,8 @@ const NewsEntry: React.FC<NewsEntryProp> = ({
         )}
       </EntryHeader>
       <EntryBody>
-        <span>200 Comments</span>
-        <span>200 Points</span>
+        <span>{entryNumPoints ?? 0} Points</span>
+        <span>{entryNumComments ?? 0} Comments</span>
         <span>200 Hours Ago</span>
       </EntryBody>
     </EntryContainer>
@@ -72,16 +76,20 @@ const EntryBody = styled.div`
   }
 `;
 
-const EntryContainer = styled.div`
+const EntryContainer = styled.a`
   background-color: #1c1c1c;
   color: white;
   padding: 0.2rem;
   height: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const EntryIndex = styled.span`
-  font-weight: 800;
-  font-size: 1.3rem;
+  font-weight: 500;
+  font-size: 1rem;
   color: white;
   opacity: 0.9;
 `;
@@ -94,7 +102,7 @@ const EntryAuthor = styled.span`
 `;
 
 const EntryTitle = styled.div`
-  font-weight: 700;
+  font-weight: 600;
   color: white;
   opacity: 0.7;
 `;
