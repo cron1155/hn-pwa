@@ -31,7 +31,8 @@ export interface Article {
     id: number;
     type: string;
     title: string;
-    url: string;
+    text: string;
+    url: string | null;
     "created_at_i": number,
     "created_at": string,
     children: ArticleChildren[]
