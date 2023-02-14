@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export interface NewsEntryProp {
@@ -15,34 +16,38 @@ const NewsEntry: React.FC<NewsEntryProp> = ({
   entryAuthor,
   entryNumComments,
   entryNumPoints,
+  entryId,
 }) => {
   return (
-    <EntryContainer>
-      <EntryHeader>
-        {entryIndex !== undefined ? (
-          <EntryIndex>{entryIndex}.</EntryIndex>
-        ) : (
-          <EntryIndex>-</EntryIndex>
-        )}
+    <Link to={"/post/" + entryId}>
+      {" "}
+      <EntryContainer>
+        <EntryHeader>
+          {entryIndex !== undefined ? (
+            <EntryIndex>{entryIndex}.</EntryIndex>
+          ) : (
+            <EntryIndex>-</EntryIndex>
+          )}
 
-        {entryTitle ? (
-          <EntryTitle>{entryTitle}</EntryTitle>
-        ) : (
-          <EntryTitle>Undefined Title</EntryTitle>
-        )}
+          {entryTitle ? (
+            <EntryTitle>{entryTitle}</EntryTitle>
+          ) : (
+            <EntryTitle>Undefined Title</EntryTitle>
+          )}
 
-        {entryAuthor ? (
-          <EntryAuthor>by {entryAuthor}</EntryAuthor>
-        ) : (
-          <EntryAuthor>by Unknown</EntryAuthor>
-        )}
-      </EntryHeader>
-      <EntryBody>
-        <span>{entryNumPoints ?? 0} Points</span>
-        <span>{entryNumComments ?? 0} Comments</span>
-        <span>200 Hours Ago</span>
-      </EntryBody>
-    </EntryContainer>
+          {entryAuthor ? (
+            <EntryAuthor>by {entryAuthor}</EntryAuthor>
+          ) : (
+            <EntryAuthor>by Unknown</EntryAuthor>
+          )}
+        </EntryHeader>
+        <EntryBody>
+          <span>{entryNumPoints ?? 0} Points</span>
+          <span>{entryNumComments ?? 0} Comments</span>
+          <span>200 Hours Ago</span>
+        </EntryBody>
+      </EntryContainer>
+    </Link>
   );
 };
 
@@ -76,7 +81,7 @@ const EntryBody = styled.div`
   }
 `;
 
-const EntryContainer = styled.a`
+const EntryContainer = styled.div`
   background-color: #1c1c1c;
   color: white;
   padding: 0.2rem;
@@ -84,6 +89,10 @@ const EntryContainer = styled.a`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  &:hover {
+    background-color: #2c2c2c;
+  }
 `;
 
 const EntryIndex = styled.span`

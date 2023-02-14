@@ -3,15 +3,14 @@ import { useQuery } from "react-query";
 import NewsEntry from "../components/NewsEntry";
 
 function Dashboard() {
-  const { isLoading, error, data } = useQuery("repoData", () =>
-    fetch("https://hn.algolia.com/api/v1/search_by_date?tags=story").then(
-      (res) => res.json()
-    )
+  const { isLoading, error, data } = useQuery(
+    "storyData",
+    () =>
+      fetch("https://hn.algolia.com/api/v1/search_by_date?tags=story").then(
+        (res) => res.json()
+      ),
+    { cacheTime: 5000 }
   );
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   const newsList = useMemo(() => {
     if (!data) return <></>;
