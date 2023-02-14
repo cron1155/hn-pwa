@@ -80,7 +80,6 @@ const EntryContainer = styled.a`
   background-color: #1c1c1c;
   color: white;
   padding: 0.2rem;
-  height: 2rem;
 
   display: flex;
   flex-direction: column;
