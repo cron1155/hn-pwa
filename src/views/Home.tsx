@@ -7,7 +7,7 @@ function Dashboard() {
     "storyData",
     () =>
       fetch(
-        "https://hn.algolia.com/api/v1/search_by_date?tags=front_page"
+        "https://hn.algolia.com/api/v1/search_by_date?tags=front_page&hitsPerPage=10"
       ).then((res) => res.json()),
     { cacheTime: 5000 }
   );

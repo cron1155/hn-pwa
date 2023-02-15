@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useQuery } from "react-query";
 import { Routes, Route, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -7,8 +7,11 @@ import { Article } from "../types";
 import Comment from "../components/Comment";
 import TextContent from "../components/TextContent";
 import UrlContent from "../components/UrlContent";
+import { useDispatch } from "react-redux";
+import { addArticle } from "../state/slices";
 
 function Post() {
+  const dispatch = useDispatch();
   const { id } = useParams();
 
   const { isLoading, error, data } = useQuery<Article>(
@@ -20,8 +23,12 @@ function Post() {
     { cacheTime: 5000 }
   );
 
-  useEffect(() => {
-    console.log(data);
+  const handleAddFavorite = useCallback(() => {
+    if (!data) {
+      return;
+    }
+
+    dispatch(addArticle(data));
   }, [data]);
 
   const comments = useMemo(() => {
@@ -54,7 +61,7 @@ function Post() {
       </PostContent>
 
       <PostActions>
-        <button>Add to Favorites</button>
+        <button onClick={handleAddFavorite}>Add to Favorites</button>
       </PostActions>
 
       <PostComments>{comments}</PostComments>

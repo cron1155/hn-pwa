@@ -24,7 +24,7 @@ const NewsEntry: React.FC<NewsEntryProp> = ({
       <EntryContainer>
         <EntryHeader>
           {entryIndex !== undefined ? (
-            <EntryIndex>{entryIndex}.</EntryIndex>
+            <EntryIndex>{entryIndex + 1}.</EntryIndex>
           ) : (
             <EntryIndex>-</EntryIndex>
           )}
