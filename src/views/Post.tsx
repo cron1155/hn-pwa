@@ -53,10 +53,18 @@ function Post() {
         )}
       </PostContent>
 
+      <PostActions>
+        <button>Add to Favorites</button>
+      </PostActions>
+
       <PostComments>{comments}</PostComments>
     </PostContainer>
   );
 }
+
+const PostActions = styled.div`
+  display: flex;
+`;
 
 const PostContent = styled.div`
   padding: 1rem 0rem;

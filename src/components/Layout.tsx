@@ -1,4 +1,5 @@
 import { ReactElement, ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
@@ -10,7 +11,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <LayoutContainer>
       <LayoutHeader>
-        <div>Hacker News</div>
+        <Link to="/">
+          <div>Hacker News</div>
+        </Link>
+
         <LayoutNavbar>
           <NavLink to="/">New</NavLink>
           <NavLink to="/favorites">Favorites</NavLink>
