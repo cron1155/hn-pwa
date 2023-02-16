@@ -8,12 +8,14 @@ import Comment from "../components/Comment";
 import TextContent from "../components/TextContent";
 import UrlContent from "../components/UrlContent";
 import { useDispatch } from "react-redux";
-import { addArticle } from "../state/slices";
+import { addArticle, removeArticle } from "../state/slices";
 import LoadingSkeleton from "../components/LoadingSkeleton";
+import { useAppSelector } from "../state";
 
 function Post() {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const articles = useAppSelector((state) => state.favoritesArticles.articles);
 
   const { isLoading, error, data } = useQuery<Article>(
     "storyData",
@@ -29,12 +31,19 @@ function Post() {
       return;
     }
 
-    dispatch(addArticle(data));
-  }, [data]);
+    if (articles.findIndex((v) => v.id === data.id) === -1) {
+      dispatch(addArticle(data));
+    } else {
+      dispatch(removeArticle(data.id));
+    }
+  }, [data, articles]);
 
   const comments = useMemo(() => {
-    if (!data?.children || data.children.length === 0) {
+    if (!data?.children) {
       return <LoadingSkeleton />;
+    }
+    if (data.children.length === 0) {
+      return <p>0 Comments</p>;
     }
 
     return data.children.map((articleChildren, index) => (
@@ -64,13 +73,19 @@ function Post() {
     <PostContainer>
       <PostHeader>
         <PostTitle>{data?.title}</PostTitle>
-        <span> {data?.author ? "by" + data.author : <LoadingSkeleton />}</span>
+        <span>
+          {data?.author ? "posted by " + data.author : <LoadingSkeleton />}
+        </span>
       </PostHeader>
 
       <PostContent>{postContent}</PostContent>
 
       <PostActions>
-        <button onClick={handleAddFavorite}>Add to Favorites</button>
+        {articles.findIndex((v) => v.id === data.id) === -1 ? (
+          <button onClick={handleAddFavorite}>Add to Favorites</button>
+        ) : (
+          <button onClick={handleAddFavorite}>Remove from Favorites</button>
+        )}
       </PostActions>
 
       <PostComments>{comments}</PostComments>
@@ -84,10 +99,14 @@ const PostActions = styled.div`
 
 const PostContent = styled.div`
   padding: 1rem 0rem;
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const PostComments = styled.div`
-  padding: 1rem;
+  padding: 0.5rem;
 `;
 
 const PostContainer = styled.div``;

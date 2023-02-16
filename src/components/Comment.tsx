@@ -36,26 +36,28 @@ const Comment: React.FC<CommentProps> = ({ data }) => {
 
 const CommentHeader = styled.div`
   border-bottom: solid 1px #292929;
-  padding: 0.5rem 0.5rem;
+  padding: 0.2rem 0.5rem;
   opacity: 0.4;
 `;
 
 const CommentContent = styled.div`
   padding: 0.5rem 0.5rem;
   opacity: 0.8;
-  &:hover {
+  /* &:hover {
     background-color: #1e1e1e;
-  }
+  } */
 `;
 
 const CommentContainer = styled.div`
   /* background-color: #1e1e1e; */
-  padding-left: 1rem;
-  border-left: solid 2px #292929;
+  /* padding-left: 0.1rem; */
+  border-left: solid 1px var(--primary-1);
+  background-color: var(--primary-3);
 `;
 
 const PostComments = styled.div`
-  padding: 1rem;
+  padding: 0.3rem;
+  background-color: var(--primary-2);
 `;
 
 export default Comment;
