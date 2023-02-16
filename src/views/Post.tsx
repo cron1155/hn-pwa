@@ -9,6 +9,7 @@ import TextContent from "../components/TextContent";
 import UrlContent from "../components/UrlContent";
 import { useDispatch } from "react-redux";
 import { addArticle } from "../state/slices";
+import LoadingSkeleton from "../components/LoadingSkeleton";
 
 function Post() {
   const dispatch = useDispatch();
@@ -32,8 +33,8 @@ function Post() {
   }, [data]);
 
   const comments = useMemo(() => {
-    if (!data?.children) {
-      return <></>;
+    if (!data?.children || data.children.length === 0) {
+      return <LoadingSkeleton />;
     }
 
     return data.children.map((articleChildren, index) => (
@@ -41,24 +42,32 @@ function Post() {
     ));
   }, [data]);
 
-  if (isLoading) {
-    return <></>;
+  const postContent = useMemo(() => {
+    if (!data?.text && !data?.url) {
+      return <LoadingSkeleton />;
+    }
+
+    if (data?.text) {
+      return <TextContent content={data.text} />;
+    }
+
+    if (data?.url) {
+      return <UrlContent url={data?.url || ""} />;
+    }
+  }, [data?.url, data?.text]);
+
+  if (isLoading || !data) {
+    return <LoadingSkeleton />;
   }
 
   return (
     <PostContainer>
       <PostHeader>
         <PostTitle>{data?.title}</PostTitle>
-        <span>by {data?.author}</span>
+        <span> {data?.author ? "by" + data.author : <LoadingSkeleton />}</span>
       </PostHeader>
 
-      <PostContent>
-        {data?.text ? (
-          <TextContent content={data.text} />
-        ) : (
-          <UrlContent url={data?.url || ""} />
-        )}
-      </PostContent>
+      <PostContent>{postContent}</PostContent>
 
       <PostActions>
         <button onClick={handleAddFavorite}>Add to Favorites</button>

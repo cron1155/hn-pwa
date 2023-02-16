@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useQuery } from "react-query";
+import LoadingSkeleton from "../components/LoadingSkeleton";
 import NewsEntry from "../components/NewsEntry";
 
 function Dashboard() {
@@ -13,7 +14,7 @@ function Dashboard() {
   );
 
   const newsList = useMemo(() => {
-    if (!data || !data.hits) return <></>;
+    if (!data || !data.hits) return <LoadingSkeleton />;
 
     return data.hits.map((hitObject: any, index: number) => (
       <NewsEntry

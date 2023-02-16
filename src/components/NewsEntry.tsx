@@ -20,7 +20,6 @@ const NewsEntry: React.FC<NewsEntryProp> = ({
 }) => {
   return (
     <Link to={"/post/" + entryId}>
-      {" "}
       <EntryContainer>
         <EntryHeader>
           {entryIndex !== undefined ? (
@@ -42,9 +41,8 @@ const NewsEntry: React.FC<NewsEntryProp> = ({
           )}
         </EntryHeader>
         <EntryBody>
-          <span>{entryNumPoints ?? 0} Points</span>
-          <span>{entryNumComments ?? 0} Comments</span>
-          <span>200 Hours Ago</span>
+          {entryNumPoints ? <span>{entryNumPoints} Points</span> : null}
+          {entryNumComments ? <span>{entryNumComments} Comments</span> : null}
         </EntryBody>
       </EntryContainer>
     </Link>
@@ -53,6 +51,8 @@ const NewsEntry: React.FC<NewsEntryProp> = ({
 
 const EntryBody = styled.div`
   display: flex;
+  justify-content: start;
+  width: 17%;
 
   --margin: 0.4rem;
 
@@ -60,9 +60,11 @@ const EntryBody = styled.div`
     /* margin-right: var(--margin); */
     padding-right: var(--margin);
     border-right: 1px solid white;
+    margin-right: 0.5rem;
+    flex: 1;
   }
 
-  & > * + * {
+  &:first-child {
     padding-left: var(--margin);
     padding-right: var(--margin);
     border-right: 1px solid white;
@@ -89,6 +91,10 @@ const EntryContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  & > * {
+    margin-bottom: 0.2rem;
+  }
 
   &:hover {
     background-color: #2c2c2c;
@@ -117,6 +123,7 @@ const EntryTitle = styled.div`
 
 const EntryHeader = styled.div`
   display: flex;
+
   align-items: baseline;
 
   & > * {
