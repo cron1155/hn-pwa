@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useQuery } from "react-query";
+import styled from "styled-components";
 import LoadingSkeleton from "../components/LoadingSkeleton";
 import NewsEntry from "../components/NewsEntry";
 
@@ -8,7 +9,7 @@ function Dashboard() {
     "storyData",
     () =>
       fetch(
-        "https://hn.algolia.com/api/v1/search_by_date?tags=front_page&hitsPerPage=10"
+        "https://hn.algolia.com/api/v1/search_by_date?tags=front_page&hitsPerPage=50"
       ).then((res) => res.json()),
     { cacheTime: 5000 }
   );
@@ -29,7 +30,16 @@ function Dashboard() {
     ));
   }, [data]);
 
-  return <>{newsList}</>;
+  return <ArticleList>{newsList}</ArticleList>;
 }
+
+const ArticleList = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  & > * {
+    margin-bottom: 0.5rem;
+  }
+`;
 
 export default Dashboard;
