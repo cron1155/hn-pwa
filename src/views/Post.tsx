@@ -20,7 +20,7 @@ function Post() {
   const { isLoading, error, data } = useQuery<Article>(
     "storyData",
     () =>
-      fetch("http://hn.algolia.com/api/v1/items/" + id).then((res) =>
+      fetch("https://hn.algolia.com/api/v1/items/" + id).then((res) =>
         res.json()
       ),
     { cacheTime: 5000 }
