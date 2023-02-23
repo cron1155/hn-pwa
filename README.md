@@ -1,5 +1,7 @@
 # Hacker News PWA
 
+Demo: [https://pwa-hackernews.netlify.app](https://pwa-hackernews.netlify.app)
+
 This is a Progressive Web Application (PWA) that displays the latest stories from Hacker News. The app is built with React, Redux, styled-components, and react-query.
 
 ## Features
